@@ -1,22 +1,20 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Listing;
 
+// All Listings
 Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/hello', function () {
-    return response('Hello world');
-});
-
-Route::get('/posts/{id}', function ($id){
-    return response('Post' . $id);
+    return view('listings', [
+        "heading" => "Latest Listings",
+        "listings" => Listing::all()
+    ]);
 });
 
 
-Route::get('/search', function (Request $request){
-    dd($request -> name . '' . $request -> city);
-    return $request -> name . '' . $request -> city;
-    // return response('Post' . $id);
+// Single Listing
+Route::get('/listing/{id}', function ($id){
+    return view('listing', [
+        "listing" => Listing::find($id)
+    ]);
 });
