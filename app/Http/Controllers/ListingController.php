@@ -11,11 +11,10 @@ class ListingController extends Controller
 {
     // show all listing
     public function index(){
-        // dd(request());
         return view('listings.index', [
             "listings" => Listing::latest()
                 ->filter(request(['tag','search']))
-                ->get()
+                ->paginate(6)
         ]);
     }
 
@@ -44,7 +43,6 @@ class ListingController extends Controller
         ]);
         
         Listing::create($formFields);
-        // Session::flash('message','Listing created');
         return redirect('/')->with('message','Listing created succesfully');
     }
 }
