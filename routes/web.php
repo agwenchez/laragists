@@ -1,20 +1,17 @@
 <?php
 
+use App\Http\Controllers\ListingController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Listing;
 
 // All Listings
-Route::get('/', function () {
-    return view('listings', [
-        "heading" => "Latest Listings",
-        "listings" => Listing::all()
-    ]);
-});
+Route::get('/', [ListingController::class, 'index']);
 
+// Show create form
+Route::get('/listings/create', [ListingController::class, "create"]);
+
+// Store listing form
+Route::post('/listings', [ListingController::class, "store"]);
 
 // Single Listing
-Route::get('/listing/{id}', function ($id){
-    return view('listing', [
-        "listing" => Listing::find($id)
-    ]);
-});
+Route::get('/listings/{listing}', [ListingController::class, "show"]);
