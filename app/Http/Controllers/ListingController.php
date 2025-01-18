@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -42,6 +43,8 @@ class ListingController extends Controller
             'company' => ['required', Rule::unique('listings', 'company')],
         ]);
         
-        return redirect('/');
+        Listing::create($formFields);
+        // Session::flash('message','Listing created');
+        return redirect('/')->with('message','Listing created succesfully');
     }
 }
